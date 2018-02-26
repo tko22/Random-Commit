@@ -3,6 +3,8 @@ const {app, BrowserWindow, TouchBar} = require('electron')
 const {TouchBarLabel, TouchBarButton, TouchBarSpacer} = TouchBar
 
 let spinning = false
+const path = require('path')
+const url = require('url')
 
 // Reel labels
 const reel1 = new TouchBarLabel()
@@ -88,14 +90,37 @@ const touchBar = new TouchBar([
 
 let window
 
-app.once('ready', () => {
+createWindow = () => {
   window = new BrowserWindow({
     frame: false,
     titleBarStyle: 'hiddenInset',
     width: 200,
-    height: 200,
+    height: 100,
     backgroundColor: '#000'
   })
-  window.loadURL('about:blank')
+  window.loadURL(url.format({
+    pathname: path.join(__dirname, 'index.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
   window.setTouchBar(touchBar)
+}
+
+app.once('ready', createWindow)
+
+// Quit when all windows are closed.
+app.on('window-all-closed', function () {
+  // On OS X it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
+
+app.on('activate', function () {
+  // On OS X it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (mainWindow === null) {
+    createWindow()
+  }
 })

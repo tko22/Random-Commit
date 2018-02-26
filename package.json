@@ -1,14 +1,15 @@
 {
-  "name": "random_git_messages_touchbar",
+  "name": "random_commit_touchbar",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
+    "start": "electron main",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Timothy Ko",
-  "license": "ISC",
-  "dependencies": {
+  "license": "MIT",
+  "devDependencies": {
     "electron": "^1.8.2"
   }
 }
