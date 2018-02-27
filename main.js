@@ -28,6 +28,7 @@ const commit = new TouchBarButton({
   }
 })
 
+
 var rd = readline.createInterface({
   input: fs.createReadStream('commit_messages.txt'),
   output: false,
