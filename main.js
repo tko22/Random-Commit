@@ -1,6 +1,9 @@
 const {app, BrowserWindow, TouchBar} = require('electron')
+var fs = require('fs')
+const readline = require('readline')
 
 const {TouchBarLabel, TouchBarButton, TouchBarSpacer} = TouchBar
+var messages = []
 
 let spinning = false
 const path = require('path')
@@ -18,52 +21,19 @@ const commit = new TouchBarButton({
   label: 'Commit',
   backgroundColor: '#7851A9',
   click: () =>{
-    reel1.label = "random cmmit message"
-  }
-})
-// Spin button
-const spin = new TouchBarButton({
-  label: '🎰 Spin',
-  backgroundColor: '#7851A9',
-  click: () => {
-    // Ignore clicks if already spinning
-    if (spinning) {
-      return
-    }
-
-    spinning = true
-    result.label = ''
-
-    let timeout = 10
-    const spinLength = 4 * 1000 // 4 seconds
-    const startTime = Date.now()
-
-    const spinReels = () => {
-      updateReels()
-
-      if ((Date.now() - startTime) >= spinLength) {
-        finishSpin()
-      } else {
-        // Slow down a bit on each spin
-        timeout *= 1.1
-        setTimeout(spinReels, timeout)
-      }
-    }
-
-    spinReels()
+    reel1.label = messages[Math.floor(Math.random()*messages.length)]
   }
 })
 
-const getRandomValue = () => {
-  const values = ['🍒', '💎', '7️⃣', '🍊', '🔔', '⭐', '🍇', '🍀']
-  return values[Math.floor(Math.random() * values.length)]
-}
+var rd = readline.createInterface({
+  input: fs.createReadStream('commit_messages.txt'),
+  output: false,
+  console: false
+})
 
-const updateReels = () => {
-  reel1.label = getRandomValue()
-  reel2.label = getRandomValue()
-  reel3.label = getRandomValue()
-}
+rd.on('line',function(line){
+  messages.push(line)
+})
 
 const finishSpin = () => {
   const uniqueValues = new Set([reel1.label, reel2.label, reel3.label]).size
@@ -83,7 +53,6 @@ const finishSpin = () => {
   spinning = false
 }
 
-const g
 const touchBar = new TouchBar([
   commit,
   new TouchBarSpacer({size: 'large'}),
