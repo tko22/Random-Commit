@@ -1,11 +1,12 @@
 const {app, BrowserWindow, TouchBar} = require('electron')
 var fs = require('fs')
+var sys = require('sys')
+var exec = require('child_process').exec;
 const readline = require('readline')
 
 const {TouchBarLabel, TouchBarButton, TouchBarSpacer} = TouchBar
 var messages = []
 
-let spinning = false
 const path = require('path')
 const url = require('url')
 
@@ -16,6 +17,13 @@ const commit = new TouchBarButton({
   label: 'Commit',
   backgroundColor: '#7851A9',
   click: () =>{
+    let random_message = messages[Math.floor(Math.random()*messages.length)]
+    let command = 'git commit . -m "' + messages[Math.floor(Math.random()*messages.length)] + '"'
+    exec(command, function(err, stdout,stdedrr){
+      if(err) {
+        console.log('err: ', err);
+      }
+    })
     reel1.label = messages[Math.floor(Math.random()*messages.length)]
   }
 })
