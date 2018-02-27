@@ -14,6 +14,13 @@ const reel3 = new TouchBarLabel()
 // Spin result label
 const result = new TouchBarLabel()
 
+const commit = new TouchBarButton({
+  label: 'Commit',
+  backgroundColor: '#7851A9',
+  click: () =>{
+    reel1.label = "random cmmit message"
+  }
+})
 // Spin button
 const spin = new TouchBarButton({
   label: '🎰 Spin',
@@ -76,16 +83,11 @@ const finishSpin = () => {
   spinning = false
 }
 
+const g
 const touchBar = new TouchBar([
-  spin,
+  commit,
   new TouchBarSpacer({size: 'large'}),
-  reel1,
-  new TouchBarSpacer({size: 'small'}),
-  reel2,
-  new TouchBarSpacer({size: 'small'}),
-  reel3,
-  new TouchBarSpacer({size: 'large'}),
-  result
+  reel1
 ])
 
 let window
