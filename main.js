@@ -23,6 +23,9 @@ const commit = new TouchBarButton({
       if(err) {
         console.log('err: ', err);
       }
+      else{
+        exec("git push")
+      }
     })
     reel1.label = messages[Math.floor(Math.random()*messages.length)]
   }
