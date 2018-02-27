@@ -1,7 +1,7 @@
 const {app, BrowserWindow, TouchBar} = require('electron')
 var fs = require('fs')
 var sys = require('sys')
-var exec = require('child_process').exec;
+const { exec } = require('child_process');
 const readline = require('readline')
 
 const {TouchBarLabel, TouchBarButton, TouchBarSpacer} = TouchBar
