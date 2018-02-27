@@ -11,11 +11,6 @@ const url = require('url')
 
 // Reel labels
 const reel1 = new TouchBarLabel()
-const reel2 = new TouchBarLabel()
-const reel3 = new TouchBarLabel()
-
-// Spin result label
-const result = new TouchBarLabel()
 
 const commit = new TouchBarButton({
   label: 'Commit',
@@ -35,24 +30,6 @@ rd.on('line',function(line){
   messages.push(line)
 })
 
-const finishSpin = () => {
-  const uniqueValues = new Set([reel1.label, reel2.label, reel3.label]).size
-  if (uniqueValues === 1) {
-    // All 3 values are the same
-    result.label = '💰 Jackpot!'
-    result.textColor = '#FDFF00'
-  } else if (uniqueValues === 2) {
-    // 2 values are the same
-    result.label = '😍 Winner!'
-    result.textColor = '#FDFF00'
-  } else {
-    // No values are the same
-    result.label = '🙁 Spin Again'
-    result.textColor = null
-  }
-  spinning = false
-}
-
 const touchBar = new TouchBar([
   commit,
   new TouchBarSpacer({size: 'large'}),
@@ -60,7 +37,6 @@ const touchBar = new TouchBar([
 ])
 
 let window
-
 createWindow = () => {
   window = new BrowserWindow({
     frame: false,
